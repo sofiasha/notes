@@ -1,5 +1,5 @@
-const notesContainer = document.getElementById("app"); // refers to div "app"
-const addNoteButton = notesContainer.querySelector(".add-note"); // refers to button, querySelector returns first elem
+const notesContainer = document.getElementById("app");
+const addNoteButton = notesContainer.querySelector(".add-note"); 
 
 getNotes().forEach((note) => {
     const noteElement = createNoteElement(note.id, note.content);
@@ -8,24 +8,20 @@ getNotes().forEach((note) => {
 
 addNoteButton.addEventListener("click", () => addNote());
 
-// get notes from local storage to clients browser
 function getNotes() {
-    return JSON.parse(localStorage.getItem("stickynotes-notes") || "[]"); // converting json to js obj
+    return JSON.parse(localStorage.getItem("stickynotes-notes") || "[]");
 }
 
-// save new notes to clients browser
-// localStorage.setItem saves (key, value) even after restarting browser
 function saveNotes(notes) {
-    localStorage.setItem("stickynotes-notes", JSON.stringify(notes)); // converting js obj to json
+    localStorage.setItem("stickynotes-notes", JSON.stringify(notes));
 }
 
-//create new elem
 function createNoteElement(id, content) {
     const element = document.createElement("textarea");
 
     element.classList.add("note");
     element.value = content;
-    element.placeholder = "Empty Sticky Note";
+    element.placeholder = "Double click to delete";
     
     element.addEventListener("change", () => {
         updateNote(id, element.value);
@@ -40,7 +36,6 @@ function createNoteElement(id, content) {
     return element;
 }
 
-// add and save to local storage
 function addNote() {
     const notes = getNotes();
     const noteObject = {
@@ -55,7 +50,6 @@ function addNote() {
     saveNotes(notes);
 }
 
-//updating note
 function updateNote(id, newContent) {
     const notes = getNotes();
     const targetNote = notes.filter((note) => note.id == id)[0];
